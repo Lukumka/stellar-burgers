@@ -1,13 +1,14 @@
 import { ProfileUI } from '@ui-pages';
-import { FC, SyntheticEvent, useEffect, useState } from 'react';
+import React, { FC, SyntheticEvent, useEffect, useState } from 'react';
+import { useAppDispatch, useSelector } from '../../services/store';
+import { Preloader } from '@ui';
+import { updateUser } from '../../services/auth/authSlice';
+import { TUser } from '@utils-types';
 
 export const Profile: FC = () => {
-  /** TODO: взять переменную из стора */
-  const user = {
-    name: '',
-    email: ''
-  };
-
+  const dispatch = useAppDispatch();
+  const user = useSelector((state) => state.auth.user);
+  const isSubmitting = useSelector((state) => state.auth.isLoading);
   const [formValue, setFormValue] = useState({
     name: user.name,
     email: user.email,
@@ -29,6 +30,8 @@ export const Profile: FC = () => {
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
+    const user: TUser = { name: formValue.name, email: formValue.email };
+    dispatch(updateUser(user));
   };
 
   const handleCancel = (e: SyntheticEvent) => {
@@ -46,16 +49,19 @@ export const Profile: FC = () => {
       [e.target.name]: e.target.value
     }));
   };
-
   return (
-    <ProfileUI
-      formValue={formValue}
-      isFormChanged={isFormChanged}
-      handleCancel={handleCancel}
-      handleSubmit={handleSubmit}
-      handleInputChange={handleInputChange}
-    />
+    <>
+      {isSubmitting ? (
+        <Preloader />
+      ) : (
+        <ProfileUI
+          formValue={formValue}
+          isFormChanged={isFormChanged}
+          handleCancel={handleCancel}
+          handleSubmit={handleSubmit}
+          handleInputChange={handleInputChange}
+        />
+      )}
+    </>
   );
-
-  return null;
 };
