@@ -4,17 +4,25 @@ import { BurgerConstructorUI } from '@ui';
 import { useAppDispatch, useSelector } from '../../services/store';
 import { resetOrder, sendOrder } from '../../services/order/orderSlice';
 import { clearIngredients } from '../../services/burgerConstructor/burgerConstructorSlice';
+import { selectIngredients } from '../../services/burgerConstructor/selectors';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export const BurgerConstructor: FC = () => {
   const dispatch = useAppDispatch();
-  const constructorItems = useSelector((state) => state.burgerConstructor);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const isAuth = useSelector((state) => state.auth.isAuthorized);
+  const constructorItems = useSelector(selectIngredients);
   const orderRequest = useSelector((state) => state.order.isRequest);
   const orderModalData = useSelector((state) => state.order.order);
   const orderData = useSelector(
     (state) => state.burgerConstructor.orderIngredients
   );
-
   const onOrderClick = () => {
+    if (!isAuth) {
+      navigate('/login', { state: { from: location } });
+      return;
+    }
     if (!constructorItems.bun || orderRequest) return;
     dispatch(sendOrder(orderData));
   };

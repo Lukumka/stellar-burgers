@@ -1,7 +1,15 @@
 import { Route } from 'react-router-dom';
-import { Profile, ProfileOrders } from '@pages';
+import {
+  ForgotPassword,
+  Login,
+  Profile,
+  ProfileOrders,
+  Register,
+  ResetPassword
+} from '@pages';
 import { ProtectedRoute } from './ProtectedRoute';
 import { OrderInfo } from '@components';
+import React from 'react';
 
 export const privateRoutes = (
   <>
@@ -26,6 +34,38 @@ export const privateRoutes = (
       element={
         <ProtectedRoute>
           <OrderInfo />
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path='/login'
+      element={
+        <ProtectedRoute onlyUnAuth>
+          <Login />
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path='/register'
+      element={
+        <ProtectedRoute onlyUnAuth>
+          <Register />
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path='/forgot-password'
+      element={
+        <ProtectedRoute onlyUnAuth>
+          <ForgotPassword />
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path='/reset-password'
+      element={
+        <ProtectedRoute onlyUnAuth>
+          <ResetPassword />
         </ProtectedRoute>
       }
     />

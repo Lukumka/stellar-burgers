@@ -1,31 +1,33 @@
 import { FC, SyntheticEvent, useEffect, useState } from 'react';
 import { LoginUI } from '@ui-pages';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useSelector } from '../../services/store';
 import { loginUser } from '../../services/auth/authSlice';
 import { Preloader } from '@ui';
 
 export const Login: FC = () => {
   const dispatch = useAppDispatch();
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const isSubmitting = useSelector((state) => state.auth.isLoading);
+  const isSubmitting = useSelector((state: any) => state.auth.isLoading);
+  const isAuthorized = useSelector((state: any) => state.auth.isAuthorized);
+
   const navigate = useNavigate();
-  const isAuth = useSelector((state) => state.auth.isAuthorized);
-  const from = localStorage.getItem('from') || '/';
+  const location = useLocation();
+
   useEffect(() => {
-    if (isAuth) {
+    if (isAuthorized) {
+      const from = location.state?.from?.pathname || '/';
       navigate(from, { replace: true });
-      localStorage.removeItem('from');
     }
-  }, [isAuth, from, navigate]);
+  }, [isAuthorized, location, navigate]);
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     dispatch(loginUser({ email, password }));
   };
+
   return (
     <>
       {isSubmitting ? (

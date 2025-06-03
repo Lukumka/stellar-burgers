@@ -43,6 +43,9 @@ const feedSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(fetchFeed.pending, (state) => {
+        state.isLoading = true;
+      })
       .addCase(fetchFeed.fulfilled, (state, action) => {
         state.isLoading = !action.payload.success;
         state.orders = action.payload.orders;

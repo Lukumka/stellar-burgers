@@ -6,7 +6,6 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import { useAppDispatch } from '../../services/store';
 import React, { useEffect } from 'react';
 import { fetchIngredients } from '../../services/ingredients/ingredientsSlice';
-import { fetchFeed } from '../../services/feed/feedSlice';
 import { publicRoutes } from '../../routes/public';
 import { privateRoutes } from '../../routes/private';
 import { checkUserAuth } from '../../services/auth/authSlice';
@@ -18,7 +17,6 @@ const App = () => {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(fetchIngredients());
-    dispatch(fetchFeed());
     dispatch(checkUserAuth());
   }, []);
 
