@@ -1,19 +1,59 @@
-# Проектная работа 11-го спринта
+<a id="readme-top"></a>
+# Stellar Burgers
+#
+## [Ссылка на проект](https://stellar-burgers.lukumka-dev.ru/)
+#
+<img  style="width: 100%; border-radius: 2px; display: block" src="https://files.lukumka-dev.ru/stellar-burgers.png" alt="Demo" width="300">
 
-[Макет](<https://www.figma.com/file/vIywAvqfkOIRWGOkfOnReY/React-Fullstack_-Проектные-задачи-(3-месяца)_external_link?type=design&node-id=0-1&mode=design>)
+#### Stellar-Burgers - это интерактивный веб-сайт, позволяющий пользователям собирать собственные бургеры из доступных ингредиентов. Проект включает систему авторизации с регистрацией, логином и личным кабинетом.
 
-[Чеклист](https://www.notion.so/praktikum/0527c10b723d4873aa75686bad54b32e?pvs=4)
+## Технологии
 
-## Этапы работы:
+* [![TypeScript][TypeScript]][TypeScript-url]
+* [![React][React]][React-url]
+* [![Redux][Redux]][Redux-url]
+* [![ReactRouter][ReactRouter]][ReactRouter-url]
+* [![Webpack][Webpack]][Webpack-url]
 
-1. Разверните проект и ознакомьтесь с кодом. Все необходимые вам компоненты уже созданы и лежат в папке `src/components`
+<p align="right">(<a href="#readme-top">наверх</a>)</p>
 
-2. Настройте роутинг.
+## Установка и запуск
+Для установки и запуска проекта необходимо выполнить команды
 
-3. Напишите функционал запросов данных с сервера, используя `Redux` и глобальный `store`. Сами "ручки" уже прописаны и лежат в `utils/burger-api.ts`
+```
+npm install
+npm run start
+```
 
-4. Настройте авторизацию и создайте защищённые роуты.
+или
 
-## Важно:
+```
+yarn
+yarn start
+```
+## Сборка
 
-Для корректной работы запросов к серверу необходимо добавить переменную BURGER_API_URL в окружение. Сама ссылка находится в файле `.env.example`.
+```
+npm run build
+```
+
+или
+
+```
+yarn build
+```
+
+<!-- Бейджи -->
+[React]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[TypeScript]: https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=FFFFFF&color=3178C6
+[Redux]: https://img.shields.io/badge/Redux-764ABC?style=for-the-badge&logo=redux&logoColor=FFFFFF&color=764ABC
+[ReactRouter]: https://img.shields.io/badge/ReactRouter-101010?style=for-the-badge&logo=reactrouter&logoColor=CA4245
+[Webpack]: https://img.shields.io/badge/Webpack-8DD6F9?style=for-the-badge&logo=webpack&logoColor=FFFFFF&color=8DD6F9
+
+<!-- Ссылки -->
+[React-url]: https://reactjs.org/
+[TypeScript-url]: https://www.typescriptlang.org/
+[Redux-url]: https://redux.dev/
+[ReactRouter-url]: https://reactrouter.com/
+[Webpack-url]: https://webpack.js.org/
+
