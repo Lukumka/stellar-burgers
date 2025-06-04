@@ -1,6 +1,7 @@
 const path = require('path');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 
 module.exports = {
@@ -54,6 +55,9 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/index.html'
     }),
+    new CopyPlugin({
+      patterns: [{ from: 'public/favicon.ico', to: 'favicon.ico' }]
+    }),
     new Dotenv()
   ],
   resolve: {
@@ -83,12 +87,14 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, './dist'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    publicPath: '/'
   },
   devServer: {
     static: path.join(__dirname, './dist'),
     compress: true,
     historyApiFallback: true,
-    port: 4000
+    port: 4000,
+    open: true
   }
 };
