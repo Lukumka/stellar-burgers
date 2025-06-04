@@ -31,3 +31,4 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           source: "dist/*"
           target: "/var/www/stellar-burgers"
+          strip_components: 1
