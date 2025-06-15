@@ -4,6 +4,10 @@ import { useAppDispatch, useSelector } from '../../services/store';
 import { registerUser } from '../../services/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { Preloader } from '@ui';
+import {
+  selectIsAuthLoading,
+  selectIsAuthorized
+} from '../../services/auth/selectors';
 
 export const Register: FC = () => {
   const dispatch = useAppDispatch();
@@ -11,10 +15,10 @@ export const Register: FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const isSubmitting = useSelector((state) => state.auth.isLoading);
+  const isSubmitting = useSelector(selectIsAuthLoading);
 
   const navigate = useNavigate();
-  const isAuth = useSelector((state) => state.auth.isAuthorized);
+  const isAuth = useSelector(selectIsAuthorized);
   const from = localStorage.getItem('from') || '/';
   useEffect(() => {
     if (isAuth) {

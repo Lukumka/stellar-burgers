@@ -6,12 +6,11 @@ import { BurgerIngredients } from '@components';
 import { BurgerConstructor } from '@components';
 import { Preloader } from '@ui';
 import { FC, useEffect } from 'react';
+import { selectIsIngredientsLoading } from '../../services/ingredients/selectors';
 
 export const ConstructorPage: FC = () => {
   useEffect(() => {}, []);
-  const isIngredientsLoading = useSelector(
-    (state) => state.ingredients.isLoading
-  );
+  const isIngredientsLoading = useSelector(selectIsIngredientsLoading);
   return (
     <>
       {isIngredientsLoading ? (

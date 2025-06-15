@@ -24,7 +24,7 @@ const initialState: feedState = {
   orders: []
 };
 
-const userFeedSlice = createSlice({
+export const userFeedSlice = createSlice({
   name: 'userFeed',
   initialState,
   reducers: {},

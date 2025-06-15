@@ -4,14 +4,18 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useSelector } from '../../services/store';
 import { loginUser } from '../../services/auth/authSlice';
 import { Preloader } from '@ui';
+import {
+  selectIsAuthLoading,
+  selectIsAuthorized
+} from '../../services/auth/selectors';
 
 export const Login: FC = () => {
   const dispatch = useAppDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const isSubmitting = useSelector((state: any) => state.auth.isLoading);
-  const isAuthorized = useSelector((state: any) => state.auth.isAuthorized);
+  const isSubmitting = useSelector(selectIsAuthLoading);
+  const isAuthorized = useSelector(selectIsAuthorized);
 
   const navigate = useNavigate();
   const location = useLocation();

@@ -5,6 +5,8 @@ import { TIngredient } from '@utils-types';
 import { useAppDispatch, useSelector } from '../../services/store';
 import { useLocation } from 'react-router-dom';
 import { fetchOrder } from '../../services/feed/feedSlice';
+import { selectCurrentOrder } from '../../services/feed/selectors';
+import { selectItems } from '../../services/ingredients/selectors';
 
 export const OrderInfo: FC = () => {
   const location = useLocation();
@@ -13,8 +15,8 @@ export const OrderInfo: FC = () => {
   useEffect(() => {
     dispatch(fetchOrder(orderNumber));
   }, []);
-  const orderData = useSelector((state) => state.feed.current);
-  const ingredients = useSelector((state) => state.ingredients.items);
+  const orderData = useSelector(selectCurrentOrder);
+  const ingredients = useSelector(selectItems);
 
   /* Готовим данные для отображения */
   const orderInfo = useMemo(() => {

@@ -7,9 +7,10 @@ import { OrdersList, FeedInfo } from '@components';
 import { RefreshButton } from '@zlden/react-developer-burger-ui-components';
 import { Preloader } from '@ui';
 import { useSelector } from '../../../../services/store';
+import { selectIsFeedLoading } from '../../../../services/feed/selectors';
 
 export const FeedUI: FC<FeedUIProps> = memo(({ orders, handleGetFeeds }) => {
-  const isLoading = useSelector((state) => state.feed.isLoading);
+  const isLoading = useSelector(selectIsFeedLoading);
   return (
     <main className={styles.containerMain}>
       <div className={`${styles.titleBox} mt-10 mb-5`}>

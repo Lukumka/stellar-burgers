@@ -8,13 +8,13 @@ type constructorState = {
   orderIngredients: string[];
 };
 
-const initialState: constructorState = {
+export const initialState: constructorState = {
   bun: null,
   ingredients: [],
   orderIngredients: []
 };
 
-const burgerConstructorSlice = createSlice({
+export const burgerConstructorSlice = createSlice({
   name: 'constructor',
   initialState,
   reducers: {

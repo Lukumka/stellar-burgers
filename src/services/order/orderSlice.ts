@@ -19,7 +19,7 @@ const initialState: OrderState = {
   isRequest: false
 };
 
-const orderSlice = createSlice({
+export const orderSlice = createSlice({
   name: 'order',
   initialState,
   reducers: {
