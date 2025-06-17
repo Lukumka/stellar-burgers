@@ -2,12 +2,12 @@ import { FC, SyntheticEvent, useEffect, useState } from 'react';
 import { LoginUI } from '@ui-pages';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useSelector } from '../../services/store';
-import { loginUser } from '../../services/auth/authSlice';
 import { Preloader } from '@ui';
 import {
   selectIsAuthLoading,
   selectIsAuthorized
 } from '../../services/auth/selectors';
+import { loginUser } from '../../services/auth/authThunks';
 
 export const Login: FC = () => {
   const dispatch = useAppDispatch();

@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import { TTabMode } from '@utils-types';
@@ -8,7 +8,7 @@ import {
   selectBuns,
   selectMains,
   selectSauces
-} from '../../services/ingredients/selectors';
+} from '../../services/ingredients/ingredientsSelectors';
 import { shallowEqual } from 'react-redux';
 
 export const BurgerIngredients = () => {

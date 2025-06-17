@@ -2,9 +2,9 @@ import { ProfileUI } from '@ui-pages';
 import React, { FC, SyntheticEvent, useEffect, useState } from 'react';
 import { useAppDispatch, useSelector } from '../../services/store';
 import { Preloader } from '@ui';
-import { updateUser } from '../../services/auth/authSlice';
 import { TUser } from '@utils-types';
 import { selectIsAuthLoading, selectUser } from '../../services/auth/selectors';
+import { updateUser } from '../../services/auth/authThunks';
 
 export const Profile: FC = () => {
   const dispatch = useAppDispatch();

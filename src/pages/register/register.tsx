@@ -1,13 +1,13 @@
 import { FC, SyntheticEvent, useEffect, useState } from 'react';
 import { RegisterUI } from '@ui-pages';
 import { useAppDispatch, useSelector } from '../../services/store';
-import { registerUser } from '../../services/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { Preloader } from '@ui';
 import {
   selectIsAuthLoading,
   selectIsAuthorized
 } from '../../services/auth/selectors';
+import { registerUser } from '../../services/auth/authThunks';
 
 export const Register: FC = () => {
   const dispatch = useAppDispatch();

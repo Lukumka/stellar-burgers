@@ -1,8 +1,7 @@
 import { FC } from 'react';
-import { Preloader } from '@ui';
-import { IngredientDetailsUI } from '@ui';
+import { IngredientDetailsUI, Preloader } from '@ui';
 import { useSelector } from '../../services/store';
-import { selectIngredient } from '../../services/ingredients/selectors';
+import { selectIngredient } from '../../services/ingredients/ingredientsSelectors';
 import { useLocation } from 'react-router-dom';
 
 export const IngredientDetails: FC = () => {

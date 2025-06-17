@@ -2,7 +2,7 @@ import { Modal, OrderInfo } from '@components';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Preloader } from '@ui';
 import { useSelector } from '../../services/store';
-import { selectIsIngredientsLoading } from '../../services/ingredients/selectors';
+import { selectIsIngredientsLoading } from '../../services/ingredients/ingredientsSelectors';
 
 export const OrderModal = () => {
   const isIngredientsLoading = useSelector(selectIsIngredientsLoading);

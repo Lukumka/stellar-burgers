@@ -1,13 +1,13 @@
 import { ProfileOrdersUI } from '@ui-pages';
 import { FC, useEffect } from 'react';
 import { useAppDispatch, useSelector } from '../../services/store';
-import { getUserFeed } from '../../services/userFeed/userFeedSlice';
 import { Preloader } from '@ui';
 import { selectIsAuthLoading } from '../../services/auth/selectors';
 import {
   selectIsUserFeedLoading,
   selectUserFeedOrders
-} from '../../services/userFeed/selectors';
+} from '../../services/userFeed/userFeedSelectors';
+import { getUserFeed } from '../../services/userFeed/userFeedThunks';
 
 export const ProfileOrders: FC = () => {
   const dispatch = useAppDispatch();

@@ -1,12 +1,11 @@
 import { FC, useEffect, useMemo } from 'react';
-import { Preloader } from '@ui';
-import { OrderInfoUI } from '@ui';
+import { OrderInfoUI, Preloader } from '@ui';
 import { TIngredient } from '@utils-types';
 import { useAppDispatch, useSelector } from '../../services/store';
 import { useLocation } from 'react-router-dom';
-import { fetchOrder } from '../../services/feed/feedSlice';
-import { selectCurrentOrder } from '../../services/feed/selectors';
-import { selectItems } from '../../services/ingredients/selectors';
+import { selectCurrentOrder } from '../../services/feed/feedSelectors';
+import { selectItems } from '../../services/ingredients/ingredientsSelectors';
+import { fetchOrder } from '../../services/feed/feedThunks';
 
 export const OrderInfo: FC = () => {
   const location = useLocation();

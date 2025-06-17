@@ -2,18 +2,19 @@ import { FC, useMemo } from 'react';
 import { TConstructorIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
 import { useAppDispatch, useSelector } from '../../services/store';
-import { resetOrder, sendOrder } from '../../services/order/orderSlice';
+import { resetOrder } from '../../services/order/orderSlice';
 import { clearIngredients } from '../../services/burgerConstructor/burgerConstructorSlice';
 import {
   selectIngredients,
   selectOrderIngredients
-} from '../../services/burgerConstructor/selectors';
+} from '../../services/burgerConstructor/burgerConstructorSelectors';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { selectIsAuthorized } from '../../services/auth/selectors';
 import {
   selectIsOrderRequest,
   selectOrder
-} from '../../services/order/selectors';
+} from '../../services/order/orderSelectors';
+import { sendOrder } from '../../services/order/orderThunks';
 
 export const BurgerConstructor: FC = () => {
   const dispatch = useAppDispatch();

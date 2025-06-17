@@ -1,74 +1,12 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import {
-  getUserApi,
-  loginUserApi,
-  logoutApi,
-  registerUserApi,
-  TAuthResponse,
-  TLoginData,
-  TRegisterData,
-  TUserResponse,
-  updateUserApi
-} from '@api';
+import { createSlice } from '@reduxjs/toolkit';
 import { TUser } from '@utils-types';
-import { deleteCookie, setCookie } from '../../utils/cookie';
-
-export const registerUser = createAsyncThunk<TAuthResponse, TRegisterData>(
-  'auth/register',
-  async (data: TRegisterData) => {
-    const response = await registerUserApi(data);
-    const { accessToken, refreshToken } = response;
-    setCookie('accessToken', accessToken, { expires: 3600 });
-    localStorage.setItem('refreshToken', refreshToken);
-    return response;
-  }
-);
-
-export const loginUser = createAsyncThunk<TAuthResponse, TLoginData>(
-  'auth/login',
-  async (data: TLoginData) => {
-    const response = await loginUserApi(data);
-    const { accessToken, refreshToken } = response;
-    setCookie('accessToken', accessToken, { expires: 3600 });
-    localStorage.setItem('refreshToken', refreshToken);
-    return response;
-  }
-);
-
-export const updateUser = createAsyncThunk<
-  TUserResponse,
-  Partial<TRegisterData>
->('auth/updateUser', async (data: Partial<TRegisterData>, thunkAPI) => {
-  try {
-    return await updateUserApi(data);
-  } catch (e) {
-    return thunkAPI.rejectWithValue('Update failed');
-  }
-});
-
-export const logoutUser = createAsyncThunk<void, void, { rejectValue: string }>(
-  'auth/logout',
-  async (_, thunkAPI) => {
-    try {
-      await logoutApi();
-      deleteCookie('accessToken');
-      localStorage.removeItem('refreshToken');
-    } catch (error: any) {
-      return thunkAPI.rejectWithValue('Logout failed');
-    }
-  }
-);
-
-export const checkUserAuth = createAsyncThunk(
-  'auth/check',
-  async (_, thunkAPI) => {
-    try {
-      return await getUserApi();
-    } catch (e) {
-      return thunkAPI.rejectWithValue('');
-    }
-  }
-);
+import {
+  checkUserAuth,
+  loginUser,
+  logoutUser,
+  registerUser,
+  updateUser
+} from './authThunks';
 
 type authState = {
   isLoading: boolean;
@@ -78,7 +16,7 @@ type authState = {
   error: string | null;
 };
 
-const initialState: authState = {
+export const initialState: authState = {
   isLoading: false,
   isAuthorized: false,
   isAuthoriseChecked: false,
@@ -98,10 +36,10 @@ export const authSlice = createSlice({
       //registerUser
       .addCase(registerUser.pending, (state) => {
         state.isLoading = true;
+        state.error = null;
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.error = null;
         state.isAuthorized = true;
         state.user = action.payload.user;
       })
@@ -112,6 +50,7 @@ export const authSlice = createSlice({
       //loginUser
       .addCase(loginUser.pending, (state) => {
         state.isLoading = true;
+        state.error = null;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -127,17 +66,20 @@ export const authSlice = createSlice({
       //updateUser
       .addCase(updateUser.pending, (state) => {
         state.isLoading = true;
+        state.error = null;
       })
       .addCase(updateUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.user = action.payload.user;
       })
-      .addCase(updateUser.rejected, (state) => {
+      .addCase(updateUser.rejected, (state, action) => {
         state.isLoading = false;
+        state.error = action.payload as string;
       })
       //logoutUser
       .addCase(logoutUser.pending, (state) => {
         state.isLoading = true;
+        state.error = null;
       })
       .addCase(logoutUser.fulfilled, (state) => {
         state.isLoading = false;
@@ -145,16 +87,15 @@ export const authSlice = createSlice({
         state.user.name = '';
         state.isAuthorized = false;
       })
-      .addCase(logoutUser.rejected, (state) => {
+      .addCase(logoutUser.rejected, (state, action) => {
         state.isLoading = false;
-        state.user.email = '';
-        state.user.name = '';
-        state.isAuthorized = false;
+        state.error = action.payload as string;
       })
       //checkAuth
       .addCase(checkUserAuth.pending, (state) => {
         state.isAuthoriseChecked = false;
         state.isAuthorized = false;
+        state.error = null;
       })
       .addCase(checkUserAuth.fulfilled, (state, action) => {
         state.isAuthoriseChecked = true;
