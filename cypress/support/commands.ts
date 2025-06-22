@@ -46,5 +46,17 @@ Cypress.Commands.add('selectIngredient', (category, value) => {
 });
 
 Cypress.Commands.add('addIngredient', (category, value) => {
-  cy.selectIngredient(category, value).contains('Добавить').click();
+  cy.selectIngredient(category, value).as('ingredient');
+  cy.get('@ingredient')
+    .find('[data-cy=ingredient-card-name]')
+    .invoke('text')
+    .as('ingredientName');
+
+  cy.get('@ingredientName').then((name) => {
+    cy.get('[data-cy=constructor]').should('not.contain', name);
+  });
+  cy.get('@ingredient').contains('Добавить').click();
+  cy.get('@ingredientName').then((name) => {
+    cy.get('[data-cy=constructor]').should('contain', name);
+  });
 });

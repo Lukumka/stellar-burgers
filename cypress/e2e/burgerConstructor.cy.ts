@@ -14,6 +14,10 @@ describe('constructor', () => {
       .as('ingredientName');
   });
   it('should add ingredient to constructor', () => {
+    cy.get('@ingredientName').then((name) => {
+      cy.get('[data-cy=constructor]').should('not.contain', name);
+    });
+
     cy.get('@selectedCard').contains('Добавить').click();
 
     cy.get('@ingredientName').then((name) => {
