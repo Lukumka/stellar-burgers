@@ -1,25 +1,22 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { orderBurgerApi } from '@api';
+import { createSlice } from '@reduxjs/toolkit';
 import { TOrder } from '@utils-types';
-
-export const sendOrder = createAsyncThunk(
-  'order/sendOrder',
-  async (data: string[]) => await orderBurgerApi(data)
-);
+import { sendOrder } from './orderThunks';
 
 type OrderState = {
   order: TOrder | null;
   name: string;
   isRequest: boolean;
+  error: null | string;
 };
 
-const initialState: OrderState = {
+export const initialState: OrderState = {
   order: null,
   name: '',
-  isRequest: false
+  isRequest: false,
+  error: null
 };
 
-const orderSlice = createSlice({
+export const orderSlice = createSlice({
   name: 'order',
   initialState,
   reducers: {
@@ -32,14 +29,16 @@ const orderSlice = createSlice({
     builder
       .addCase(sendOrder.pending, (state) => {
         state.isRequest = true;
+        state.error = null;
       })
       .addCase(sendOrder.fulfilled, (state, action) => {
         state.order = action.payload;
         state.name = action.payload.name;
         state.isRequest = false;
       })
-      .addCase(sendOrder.rejected, (state) => {
+      .addCase(sendOrder.rejected, (state, action) => {
         state.isRequest = false;
+        state.error = action.payload as string;
       });
   }
 });

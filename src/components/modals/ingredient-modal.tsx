@@ -2,11 +2,10 @@ import { IngredientDetails, Modal } from '@components';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Preloader } from '@ui';
 import { useSelector } from '../../services/store';
+import { selectIsIngredientsLoading } from '../../services/ingredients/ingredientsSelectors';
 
 export const IngredientModal = () => {
-  const isIngredientsLoading = useSelector(
-    (state) => state.ingredients.isLoading
-  );
+  const isIngredientsLoading = useSelector(selectIsIngredientsLoading);
   const navigate = useNavigate();
   const location = useLocation();
   const onClose = () => {

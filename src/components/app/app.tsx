@@ -5,13 +5,13 @@ import { AppHeader } from '@components';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { useAppDispatch } from '../../services/store';
 import React, { useEffect } from 'react';
-import { fetchIngredients } from '../../services/ingredients/ingredientsSlice';
 import { publicRoutes } from '../../routes/public';
 import { privateRoutes } from '../../routes/private';
-import { checkUserAuth } from '../../services/auth/authSlice';
 import { IngredientModal } from '../modals/ingredient-modal';
 import { OrderModal } from '../modals/order-modal';
 import { ProtectedRoute } from '../../routes/ProtectedRoute';
+import { fetchIngredients } from '../../services/ingredients/ingredientsThunks';
+import { checkUserAuth } from '../../services/auth/authThunks';
 
 const App = () => {
   const dispatch = useAppDispatch();

@@ -2,22 +2,29 @@ import { FC, useMemo } from 'react';
 import { TConstructorIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
 import { useAppDispatch, useSelector } from '../../services/store';
-import { resetOrder, sendOrder } from '../../services/order/orderSlice';
+import { resetOrder } from '../../services/order/orderSlice';
 import { clearIngredients } from '../../services/burgerConstructor/burgerConstructorSlice';
-import { selectIngredients } from '../../services/burgerConstructor/selectors';
+import {
+  selectIngredients,
+  selectOrderIngredients
+} from '../../services/burgerConstructor/burgerConstructorSelectors';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { selectIsAuthorized } from '../../services/auth/selectors';
+import {
+  selectIsOrderRequest,
+  selectOrder
+} from '../../services/order/orderSelectors';
+import { sendOrder } from '../../services/order/orderThunks';
 
 export const BurgerConstructor: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const isAuth = useSelector((state) => state.auth.isAuthorized);
+  const isAuth = useSelector(selectIsAuthorized);
   const constructorItems = useSelector(selectIngredients);
-  const orderRequest = useSelector((state) => state.order.isRequest);
-  const orderModalData = useSelector((state) => state.order.order);
-  const orderData = useSelector(
-    (state) => state.burgerConstructor.orderIngredients
-  );
+  const orderRequest = useSelector(selectIsOrderRequest);
+  const orderModalData = useSelector(selectOrder);
+  const orderData = useSelector(selectOrderIngredients);
   const onOrderClick = () => {
     if (!isAuth) {
       navigate('/login', { state: { from: location } });

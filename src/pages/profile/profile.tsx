@@ -2,13 +2,14 @@ import { ProfileUI } from '@ui-pages';
 import React, { FC, SyntheticEvent, useEffect, useState } from 'react';
 import { useAppDispatch, useSelector } from '../../services/store';
 import { Preloader } from '@ui';
-import { updateUser } from '../../services/auth/authSlice';
 import { TUser } from '@utils-types';
+import { selectIsAuthLoading, selectUser } from '../../services/auth/selectors';
+import { updateUser } from '../../services/auth/authThunks';
 
 export const Profile: FC = () => {
   const dispatch = useAppDispatch();
-  const user = useSelector((state) => state.auth.user);
-  const isSubmitting = useSelector((state) => state.auth.isLoading);
+  const user = useSelector(selectUser);
+  const isSubmitting = useSelector(selectIsAuthLoading);
   const [formValue, setFormValue] = useState({
     name: user.name,
     email: user.email,

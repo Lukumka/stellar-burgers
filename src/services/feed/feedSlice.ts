@@ -1,24 +1,10 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { TOrder } from '@utils-types';
-import {
-  getFeedsApi,
-  getOrderByNumberApi,
-  TFeedsResponse,
-  TOrderResponse
-} from '@api';
-
-export const fetchFeed = createAsyncThunk<TFeedsResponse>(
-  'feed/fetchFeed',
-  getFeedsApi
-);
-
-export const fetchOrder = createAsyncThunk<TOrderResponse, number>(
-  'feed/fetchOrder',
-  async (number) => await getOrderByNumberApi(number)
-);
+import { fetchFeed, fetchOrder } from './feedThunks';
 
 type feedState = {
   isLoading: boolean;
+  error: string | null;
   orders: TOrder[];
   current: TOrder | null;
   feed: {
@@ -27,8 +13,9 @@ type feedState = {
   };
 };
 
-const initialState: feedState = {
+export const initialState: feedState = {
   isLoading: true,
+  error: null,
   orders: [],
   current: null,
   feed: {
@@ -37,7 +24,7 @@ const initialState: feedState = {
   }
 };
 
-const feedSlice = createSlice({
+export const feedSlice = createSlice({
   name: 'feed',
   initialState,
   reducers: {},
@@ -45,6 +32,7 @@ const feedSlice = createSlice({
     builder
       .addCase(fetchFeed.pending, (state) => {
         state.isLoading = true;
+        state.error = null;
       })
       .addCase(fetchFeed.fulfilled, (state, action) => {
         state.isLoading = !action.payload.success;
@@ -52,9 +40,21 @@ const feedSlice = createSlice({
         state.feed.totalToday = action.payload.totalToday;
         state.feed.total = action.payload.total;
       })
+      .addCase(fetchFeed.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(fetchOrder.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
       .addCase(fetchOrder.fulfilled, (state, action) => {
         state.isLoading = !action.payload.success;
         state.current = action.payload.orders[0];
+      })
+      .addCase(fetchOrder.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
       });
   }
 });

@@ -8,13 +8,13 @@ type constructorState = {
   orderIngredients: string[];
 };
 
-const initialState: constructorState = {
+export const initialState: constructorState = {
   bun: null,
   ingredients: [],
   orderIngredients: []
 };
 
-const burgerConstructorSlice = createSlice({
+export const burgerConstructorSlice = createSlice({
   name: 'constructor',
   initialState,
   reducers: {
@@ -43,11 +43,13 @@ const burgerConstructorSlice = createSlice({
     },
     moveUpIngredient: (state, action) => {
       const index = action.payload;
+      if (index <= 0 || index >= state.ingredients.length) return;
       const [movedItem] = state.ingredients.splice(index, 1);
       state.ingredients.splice(index - 1, 0, movedItem);
     },
     moveDownIngredient: (state, action) => {
       const index = action.payload;
+      if (index < 0 || index >= state.ingredients.length - 1) return;
       const [movedItem] = state.ingredients.splice(index, 1);
       state.ingredients.splice(index + 1, 0, movedItem);
     },

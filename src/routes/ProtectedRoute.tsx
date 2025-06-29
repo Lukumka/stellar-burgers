@@ -2,6 +2,10 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { useSelector } from '../services/store';
 import { Preloader } from '@ui';
 import { ReactNode } from 'react';
+import {
+  selectIsAuthChecked,
+  selectIsAuthorized
+} from '../services/auth/selectors';
 
 export const ProtectedRoute = ({
   children,
@@ -10,10 +14,8 @@ export const ProtectedRoute = ({
   children: ReactNode;
   onlyUnAuth?: boolean;
 }) => {
-  const isAuth = useSelector((state: any) => state.auth.isAuthorized);
-  const isAuthChecked = useSelector(
-    (state: any) => state.auth.isAuthoriseChecked
-  );
+  const isAuth = useSelector(selectIsAuthorized);
+  const isAuthChecked = useSelector(selectIsAuthChecked);
   const location = useLocation();
 
   if (!isAuthChecked) {

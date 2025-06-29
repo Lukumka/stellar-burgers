@@ -1,30 +1,20 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { TOrder } from '@utils-types';
-import { getOrdersApi, TFeedsResponse } from '@api';
-
-export const getUserFeed = createAsyncThunk<TFeedsResponse>(
-  'userFeed/getUserFeed',
-  async (_, thunkAPI) => {
-    try {
-      return await getOrdersApi();
-    } catch (e) {
-      console.log(e);
-      return thunkAPI.rejectWithValue('');
-    }
-  }
-);
+import { getUserFeed } from './userFeedThunks';
 
 type feedState = {
   isLoading: boolean;
+  error: null | string;
   orders: TOrder[];
 };
 
-const initialState: feedState = {
+export const initialState: feedState = {
   isLoading: false,
+  error: null,
   orders: []
 };
 
-const userFeedSlice = createSlice({
+export const userFeedSlice = createSlice({
   name: 'userFeed',
   initialState,
   reducers: {},
@@ -32,10 +22,15 @@ const userFeedSlice = createSlice({
     builder
       .addCase(getUserFeed.pending, (state) => {
         state.isLoading = true;
+        state.error = null;
       })
       .addCase(getUserFeed.fulfilled, (state, action) => {
         state.isLoading = false;
         state.orders = action.payload.orders;
+      })
+      .addCase(getUserFeed.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
       });
   }
 });
